@@ -25,18 +25,7 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Contact footer */}
-      <footer className="animate-fade-up-delay-3 absolute bottom-10 flex flex-col items-center gap-2">
-        <span className="text-[10px] font-light uppercase tracking-[0.3em] text-ink-muted">
-          Contacto
-        </span>
-        <a
-          href="mailto:contact@oopsy.com"
-          className="text-xs font-light tracking-[0.2em] text-ink-light transition-colors duration-500 hover:text-ink"
-        >
-          contact@oopsy.com
-        </a>
-      </footer>
+
     </main>
   );
 }
