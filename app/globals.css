@@ -1,71 +1,277 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+/* ============================================================
+   OOPSY — Global Styles & Design System
+   
+   Tipografías de marca:
+   - Melodrama (Variable): Títulos y headings
+   - Author (Variable): Cuerpo de texto
+   ============================================================ */
 @import "tailwindcss";
 
-@theme {
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Cormorant Garamond', serif;
-  --color-ivory: #faf9f6;
-  --color-ink: #1a1a1a;
-  --color-ink-light: #555555;
-  --color-ink-muted: #999999;
-  --color-line: #e5e3df;
+/* ─── Custom Fonts ─── */
+@font-face {
+  font-family: 'Melodrama';
+  src: url('/fonts/Melodrama-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
 }
 
-/* Base reset & smooth scrolling */
+@font-face {
+  font-family: 'Author';
+  src: url('/fonts/Author-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Author';
+  src: url('/fonts/Author-VariableItalic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+}
+
+/* ─── Design Tokens ─── */
+@theme {
+  --font-heading: 'Melodrama', Georgia, serif;
+  --font-body: 'Author', system-ui, sans-serif;
+
+  /* Brand Palette */
+  --color-primary: #b7e27f;
+  --color-primary-dark: #9ac46c;
+  --color-primary-light: #d4eeb3;
+  --color-secondary: #f2a0c5;
+  --color-secondary-dark: #d884a6;
+  --color-secondary-light: #f7c4db;
+  --color-accent: #52b8c6;
+  --color-accent-dark: #4aa8af;
+  --color-accent-light: #8cd3db;
+  --color-neutral: #fff6e6;
+  --color-neutral-dark: #f4ecdf;
+  --color-dark: #3a3835;
+  --color-dark-deep: #302e2c;
+
+  /* Functional */
+  --color-surface: #fefefe;
+  --color-surface-alt: #faf8f5;
+  --color-text-heading: #302e2c;
+  --color-text-body: #4a4745;
+  --color-text-muted: #8a8580;
+  --color-border: #e8e5e0;
+  --color-border-light: #f0ede8;
+}
+
+/* ─── Base ─── */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Selection style */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-body);
+  background-color: var(--color-surface);
+}
+
 ::selection {
-  background-color: var(--color-ink);
-  color: var(--color-ivory);
+  background-color: var(--color-secondary);
+  color: var(--color-dark);
 }
 
-/* Subtle fade-in animation */
+/* ─── Keyframes ─── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes lineExpand {
-  from {
-    width: 0;
-  }
-  to {
-    width: 60px;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(2deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(3deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ─── Animation Utilities ─── */
 .animate-fade-up {
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
-
-.animate-fade-up-delay-1 {
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+.animate-fade-up-d1 {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
   opacity: 0;
 }
-
-.animate-fade-up-delay-2 {
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+.animate-fade-up-d2 {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
   opacity: 0;
 }
-
-.animate-fade-up-delay-3 {
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+.animate-fade-up-d3 {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.36s forwards;
   opacity: 0;
 }
+.animate-fade-up-d4 {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.48s forwards;
+  opacity: 0;
+}
+.animate-fade-in {
+  animation: fadeIn 0.7s ease forwards;
+  opacity: 0;
+}
+.animate-scale-in {
+  animation: scaleIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.animate-slide-right {
+  animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+.animate-pulse-soft {
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
 
-.animate-line-expand {
-  animation: lineExpand 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-  width: 0;
+/* ─── Scroll-triggered animations ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── Utility ─── */
+.transition-brand {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-dark {
+  background: rgba(48, 46, 44, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Text gradient utility */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-secondary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer button effect */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 55%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-neutral);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-light);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
 }
