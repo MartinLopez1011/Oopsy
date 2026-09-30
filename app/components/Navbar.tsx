@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { trackEvent } from "@/app/lib/gtag";
 
 const NAV_LINKS = [
   { label: "Inicio", href: "#hero" },
@@ -71,6 +72,7 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <Link
           href="#contacto"
+          onClick={() => trackEvent("click_cta", { location: "navbar_desktop", text: "Contáctanos" })}
           className={`hidden items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold shadow-md transition-brand hover:shadow-lg hover:-translate-y-0.5 md:inline-flex btn-shimmer ${
             isScrolled
               ? "bg-dark text-neutral hover:bg-dark-deep"
@@ -169,7 +171,10 @@ export default function Navbar() {
 
           <Link
             href="#contacto"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              trackEvent("click_cta", { location: "navbar_mobile", text: "Contáctanos" });
+            }}
             className="rounded-full bg-dark px-10 py-3.5 text-lg font-semibold text-neutral shadow-xl transition-brand hover:bg-dark-deep btn-shimmer"
             style={{
               opacity: isMobileMenuOpen ? 1 : 0,

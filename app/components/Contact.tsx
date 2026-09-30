@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { useReveal } from "@/app/hooks/useReveal";
+import { trackEvent } from "@/app/lib/gtag";
 
 export default function Contact() {
   const reveal = useReveal();
@@ -28,6 +29,10 @@ export default function Contact() {
       });
 
       if (res.ok) {
+        trackEvent("generate_lead", {
+          event_category: "Contact",
+          event_label: String(formData.get("subject") || "General"),
+        });
         setFormState("sent");
         form.reset();
         setTimeout(() => setFormState("idle"), 5000);

@@ -1,0 +1,2 @@
+# SWE 1 Workspace
+Working directory for teamwork_preview_swe agent.
