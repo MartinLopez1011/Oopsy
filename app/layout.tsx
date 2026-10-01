@@ -100,6 +100,16 @@ export const metadata: Metadata = {
         google: googleVerification,
       }
     : undefined,
+  icons: {
+    icon: [
+      { url: "/images/icons/isotipo-pink.png", sizes: "1024x1024", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/images/icons/isotipo-pink.png",
+    apple: [
+      { url: "/images/icons/isotipo-pink.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export default function RootLayout({
