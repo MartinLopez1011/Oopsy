@@ -24,8 +24,78 @@ function onOpen() {
   ui.createMenu("✦ Oopsy Web")
     .addItem("🚀 Publicar Portafolio en Vivo", "dispararPublicacionVercel")
     .addSeparator()
+    .addItem("✨ Agregar Columnas de Créditos", "actualizarColumnasCreditos")
     .addItem("🔍 Verificar Proyectos Listos", "verificarProyectosPublicados")
     .addToUi();
+}
+
+/**
+ * Inserta automáticamente las nuevas columnas de créditos en la fila de encabezados (Fila 4)
+ * justo antes de la columna "Estado", heredando el formato visual de la tabla.
+ */
+function actualizarColumnasCreditos() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var ui = SpreadsheetApp.getUi();
+
+  var headerRowIdx = -1;
+  var estadoColIdx = -1;
+
+  for (var r = 0; r < Math.min(6, data.length); r++) {
+    for (var c = 0; c < data[r].length; c++) {
+      var val = String(data[r][c]).trim().toLowerCase();
+      if (val === "estado") {
+        headerRowIdx = r;
+        estadoColIdx = c;
+        break;
+      }
+    }
+    if (estadoColIdx !== -1) break;
+  }
+
+  if (headerRowIdx === -1 || estadoColIdx === -1) {
+    ui.alert("No se encontró la fila de encabezados con la columna 'Estado'.");
+    return;
+  }
+
+  var nuevasColumnas = [
+    "Créditos - Modelo",
+    "Créditos - Diseñadores",
+    "Créditos - Maquilladoras",
+    "Créditos - Dirección Creativa",
+    "Créditos - Organizadores Asociados"
+  ];
+
+  var headersActuales = data[headerRowIdx].map(function (h) {
+    return String(h).trim().toLowerCase();
+  });
+
+  var faltantes = nuevasColumnas.filter(function (col) {
+    return headersActuales.indexOf(col.toLowerCase()) === -1;
+  });
+
+  if (faltantes.length === 0) {
+    ui.alert("✅ Todas las columnas de créditos ya están creadas en la planilla.");
+    return;
+  }
+
+  // Insertar las columnas faltantes justo antes de "Estado" (1-indexed en Apps Script)
+  var insertStartCol = estadoColIdx + 1;
+  sheet.insertColumnsBefore(insertStartCol, faltantes.length);
+
+  var headerRowNumber = headerRowIdx + 1;
+  for (var i = 0; i < faltantes.length; i++) {
+    var cell = sheet.getRange(headerRowNumber, insertStartCol + i);
+    cell.setValue(faltantes[i]);
+    sheet.setColumnWidth(insertStartCol + i, 190);
+  }
+
+  ui.alert(
+    "✨ Columnas agregadas con éxito",
+    "Se añadieron las siguientes columnas a tu tabla:\n\n• " + faltantes.join("\n• ") +
+    "\n\nRecuerda: cualquier celda de créditos que dejes vacía NO aparecerá en la página web.",
+    ui.ButtonSet.OK
+  );
 }
 
 /**

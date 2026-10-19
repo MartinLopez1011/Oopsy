@@ -318,17 +318,28 @@ export function parseGoogleSheetCsv(csvText: string): RawPortfolioSheetRow[] {
   // Normalizar encabezados para que si la columna dice "Oopsy - Portafolio de Moda y Fotografía ID Proyecto" se mapee a "ID Proyecto"
   const normalizedHeaders = rows[headerRowIndex].map((rawHeader) => {
     const clean = rawHeader.replace(/^\uFEFF/, "").trim();
-    if (clean.includes("ID Proyecto")) return "ID Proyecto";
-    if (clean.includes("Título del Proyecto")) return "Título del Proyecto";
-    if (clean.includes("Cliente / Marca")) return "Cliente / Marca";
-    if (clean.includes("Categoría")) return "Categoría";
-    if (clean.includes("Mes / Año")) return "Mes / Año";
-    if (clean.includes("Carpeta Drive")) return "Carpeta Drive";
-    if (clean.includes("Imagen de Portada")) return "Imagen de Portada";
-    if (clean.includes("Créditos - Fotografía")) return "Créditos - Fotografía";
-    if (clean.includes("Créditos - Dirección de Arte")) return "Créditos - Dirección de Arte / Estilismo";
-    if (clean.includes("Estado")) return "Estado";
-    if (clean.includes("Destacado en Home")) return "Destacado en Home";
+    const lower = clean
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+
+    if (lower.includes("id proyecto")) return "ID Proyecto";
+    if (lower.includes("titulo del proyecto")) return "Título del Proyecto";
+    if (lower.includes("cliente") || lower.includes("marca")) return "Cliente / Marca";
+    if (lower.includes("categoria")) return "Categoría";
+    if (lower.includes("mes / ano") || lower.includes("mes/ano")) return "Mes / Año";
+    if (lower.includes("carpeta drive")) return "Carpeta Drive";
+    if (lower.includes("imagen de portada")) return "Imagen de Portada";
+    if (lower.includes("fotografia")) return "Créditos - Fotografía";
+    if (lower.includes("direccion de arte") || lower.includes("estilismo"))
+      return "Créditos - Dirección de Arte / Estilismo";
+    if (lower.includes("modelo")) return "Créditos - Modelo";
+    if (lower.includes("disenador")) return "Créditos - Diseñadores";
+    if (lower.includes("maquilla")) return "Créditos - Maquilladoras";
+    if (lower.includes("direccion creativa")) return "Créditos - Dirección Creativa";
+    if (lower.includes("organizador")) return "Créditos - Organizadores Asociados";
+    if (lower === "estado" || lower.includes("estado")) return "Estado";
+    if (lower.includes("destacado en home")) return "Destacado en Home";
     return clean;
   });
 
@@ -792,12 +803,12 @@ export function normalizePortfolioRows(
   return publishedRows.map((row, index) => {
     const id =
       row["ID Proyecto"]?.trim() || `PRJ-${String(index + 1).padStart(3, "0")}`;
-    const title = row["Título del Proyecto"]?.trim() || "Proyecto Editorial";
-    const client = row["Cliente / Marca"]?.trim() || "Oopsy Editorial";
+    const title = row["Título del Proyecto"]?.trim() || id;
+    const client = row["Cliente / Marca"]?.trim() || "";
     const category = normalizeCategory(
       row["Categoría"] || "Sesiones Fotográficas"
     );
-    const monthYear = row["Mes / Año"]?.trim() || "09/2026";
+    const monthYear = row["Mes / Año"]?.trim() || "";
     const driveFolderUrl = row["Carpeta Drive"]?.trim() || "";
     const driveFolderId = extractDriveFolderId(driveFolderUrl);
 
@@ -884,7 +895,7 @@ export function normalizePortfolioRows(
         {
           id: `${id}-img-1`,
           src: coverImage,
-          alt: `${title} — ${client}`,
+          alt: client ? `${title} — ${client}` : title,
           width,
           height,
           aspectRatio,
@@ -926,6 +937,11 @@ export function normalizePortfolioRows(
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
+    const cleanCredit = (val?: string): string | undefined => {
+      const trimmed = val?.trim();
+      return trimmed && trimmed.length > 0 ? trimmed : undefined;
+    };
+
     return {
       id,
       slug,
@@ -933,7 +949,7 @@ export function normalizePortfolioRows(
       client,
       category,
       monthYear,
-      formattedDate: formatMonthYear(monthYear),
+      formattedDate: monthYear ? formatMonthYear(monthYear) : "",
       driveFolderUrl,
       driveFolderId,
       coverImage,
@@ -941,11 +957,17 @@ export function normalizePortfolioRows(
       aspectRatio,
       coverDimensions: { width, height },
       credits: {
-        photography:
-          row["Créditos - Fotografía"]?.trim() || "Oopsy Editorial Studio",
-        artDirectionAndStyling:
-          row["Créditos - Dirección de Arte / Estilismo"]?.trim() ||
-          "Dirección Creativa Oopsy",
+        photography: cleanCredit(row["Créditos - Fotografía"]),
+        artDirectionAndStyling: cleanCredit(
+          row["Créditos - Dirección de Arte / Estilismo"]
+        ),
+        model: cleanCredit(row["Créditos - Modelo"]),
+        designers: cleanCredit(row["Créditos - Diseñadores"]),
+        makeup: cleanCredit(row["Créditos - Maquilladoras"]),
+        creativeDirection: cleanCredit(row["Créditos - Dirección Creativa"]),
+        associatedOrganizers: cleanCredit(
+          row["Créditos - Organizadores Asociados"]
+        ),
       },
       status: "Publicado",
       featuredInHome,
@@ -964,7 +986,7 @@ async function fetchRowsFromGoogleSheets(): Promise<RawPortfolioSheetRow[] | nul
   const sheetId =
     process.env.GOOGLE_SHEETS_PORTFOLIO_ID?.trim() || DEFAULT_GOOGLE_SHEET_ID;
   const sheetRange =
-    process.env.GOOGLE_SHEETS_PORTFOLIO_RANGE?.trim() || "A1:K100";
+    process.env.GOOGLE_SHEETS_PORTFOLIO_RANGE?.trim() || "A1:Z100";
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY?.trim();
   const customCsvUrl = process.env.GOOGLE_SHEETS_CSV_URL?.trim();
 

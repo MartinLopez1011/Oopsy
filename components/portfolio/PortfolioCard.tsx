@@ -107,9 +107,13 @@ export default function PortfolioCard({
         >
           {/* Top badge inside overlay */}
           <div className="flex items-center justify-between">
-            <span className="inline-block border border-neutral/30 bg-dark-deep/40 px-2.5 py-1 text-[0.62rem] font-medium tracking-[0.22em] text-neutral uppercase backdrop-blur-md">
-              {project.monthYear}
-            </span>
+            {project.monthYear ? (
+              <span className="inline-block border border-neutral/30 bg-dark-deep/40 px-2.5 py-1 text-[0.62rem] font-medium tracking-[0.22em] text-neutral uppercase backdrop-blur-md">
+                {project.monthYear}
+              </span>
+            ) : (
+              <span />
+            )}
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral/30 bg-neutral/10 text-neutral backdrop-blur-md transition-transform duration-500 group-hover:rotate-45">
               <svg
                 className="h-3.5 w-3.5"
@@ -129,9 +133,11 @@ export default function PortfolioCard({
 
           {/* Bottom project metadata inside overlay */}
           <div className="translate-y-3 transition-transform duration-500 ease-out group-hover:translate-y-0">
-            <p className="text-[0.68rem] font-medium tracking-[0.24em] text-primary uppercase font-body">
-              {project.client}
-            </p>
+            {project.client && (
+              <p className="text-[0.68rem] font-medium tracking-[0.24em] text-primary uppercase font-body">
+                {project.client}
+              </p>
+            )}
             <h3 className="mt-1.5 font-heading text-2xl font-normal leading-[1.12] tracking-tight text-neutral md:text-[1.65rem]">
               {project.title}
             </h3>
@@ -155,16 +161,20 @@ export default function PortfolioCard({
               {project.title}
             </button>
           </h2>
-          <p className="mt-0.5 truncate text-xs tracking-[0.14em] text-text-muted uppercase font-body">
-            {project.client}
-          </p>
+          {project.client && (
+            <p className="mt-0.5 truncate text-xs tracking-[0.14em] text-text-muted uppercase font-body">
+              {project.client}
+            </p>
+          )}
         </div>
-        <time
-          dateTime={project.monthYear}
-          className="shrink-0 text-[0.7rem] font-medium tracking-[0.18em] text-text-muted uppercase font-body"
-        >
-          {project.monthYear}
-        </time>
+        {project.monthYear && (
+          <time
+            dateTime={project.monthYear}
+            className="shrink-0 text-[0.7rem] font-medium tracking-[0.18em] text-text-muted uppercase font-body"
+          >
+            {project.monthYear}
+          </time>
+        )}
       </div>
     </article>
   );

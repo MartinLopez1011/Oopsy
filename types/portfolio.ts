@@ -37,7 +37,7 @@ export type EditorialAspectRatio = "3:4" | "4:5" | "16:10" | "1:1";
 
 /**
  * Representación exacta de una fila cruda del Google Sheets
- * Columnas exactas de la hoja de cálculo:
+ * Columnas de la hoja de cálculo:
  * - ID Proyecto (ej: PRJ-001)
  * - Título del Proyecto
  * - Cliente / Marca
@@ -47,6 +47,11 @@ export type EditorialAspectRatio = "3:4" | "4:5" | "16:10" | "1:1";
  * - Imagen de Portada
  * - Créditos - Fotografía
  * - Créditos - Dirección de Arte / Estilismo
+ * - Créditos - Modelo
+ * - Créditos - Diseñadores
+ * - Créditos - Maquilladoras
+ * - Créditos - Dirección Creativa
+ * - Créditos - Organizadores Asociados
  * - Estado
  * - Destacado en Home
  */
@@ -58,8 +63,13 @@ export interface RawPortfolioSheetRow {
   "Mes / Año": string;
   "Carpeta Drive": string;
   "Imagen de Portada": string;
-  "Créditos - Fotografía": string;
-  "Créditos - Dirección de Arte / Estilismo": string;
+  "Créditos - Fotografía"?: string;
+  "Créditos - Dirección de Arte / Estilismo"?: string;
+  "Créditos - Modelo"?: string;
+  "Créditos - Diseñadores"?: string;
+  "Créditos - Maquilladoras"?: string;
+  "Créditos - Dirección Creativa"?: string;
+  "Créditos - Organizadores Asociados"?: string;
   "Estado": PortfolioStatus | string;
   "Destacado en Home": SheetYesNo | string;
 }
@@ -80,11 +90,18 @@ export interface PortfolioGalleryImage {
 }
 
 /**
- * Ficha técnica de créditos editoriales del proyecto
+ * Ficha técnica de créditos editoriales del proyecto.
+ * Todos los campos son opcionales: si en Google Sheets una celda está vacía,
+ * queda como `undefined` y NO se renderiza en el frontend.
  */
 export interface PortfolioCredits {
-  photography: string;
-  artDirectionAndStyling: string;
+  photography?: string;
+  artDirectionAndStyling?: string;
+  model?: string;
+  designers?: string;
+  makeup?: string;
+  creativeDirection?: string;
+  associatedOrganizers?: string;
 }
 
 /**

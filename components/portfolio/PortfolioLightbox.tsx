@@ -323,9 +323,11 @@ export default function PortfolioLightbox({
           {/* Categoría & Fecha */}
           <div className="flex items-center justify-between text-[0.7rem] tracking-[0.2em] text-primary uppercase lg:mt-7">
             <span>{project.category}</span>
-            <time dateTime={project.monthYear} className="text-neutral/60">
-              {project.monthYear}
-            </time>
+            {project.monthYear && (
+              <time dateTime={project.monthYear} className="text-neutral/60">
+                {project.monthYear}
+              </time>
+            )}
           </div>
 
           {/* Título del Proyecto & Cliente */}
@@ -335,31 +337,54 @@ export default function PortfolioLightbox({
           >
             {project.title}
           </h2>
-          <p className="mt-1.5 text-xs font-medium tracking-[0.2em] text-neutral/65 uppercase lg:mt-2">
-            CLIENTE / MARCA —{" "}
-            <span className="text-neutral">{project.client}</span>
-          </p>
+          {project.client && (
+            <p className="mt-1.5 text-xs font-medium tracking-[0.2em] text-neutral/65 uppercase lg:mt-2">
+              CLIENTE / MARCA —{" "}
+              <span className="text-neutral">{project.client}</span>
+            </p>
+          )}
 
-          {/* Créditos Editoriales (Fotografía y Dirección de Arte / Estilismo) */}
-          <dl className="mt-5 grid grid-cols-1 gap-4 border-y border-neutral/10 py-4 text-sm sm:grid-cols-2 lg:mt-8 lg:grid-cols-1 lg:gap-5 lg:py-6">
-            <div>
-              <dt className="text-[0.65rem] font-semibold tracking-[0.22em] text-neutral/45 uppercase">
-                Créditos — Fotografía
-              </dt>
-              <dd className="mt-1 font-body text-sm font-normal text-neutral/90">
-                {project.credits.photography}
-              </dd>
-            </div>
+          {/* Créditos Editoriales dinámicos: SOLO se renderizan los campos que no estén vacíos en el Excel */}
+          {(() => {
+            const creditEntries = [
+              { label: "Fotografía", value: project.credits.photography },
+              {
+                label: "Dirección Creativa",
+                value: project.credits.creativeDirection,
+              },
+              {
+                label: "Dirección de Arte / Estilismo",
+                value: project.credits.artDirectionAndStyling,
+              },
+              { label: "Modelo", value: project.credits.model },
+              { label: "Diseñadores", value: project.credits.designers },
+              { label: "Maquilladoras", value: project.credits.makeup },
+              {
+                label: "Organizadores Asociados",
+                value: project.credits.associatedOrganizers,
+              },
+            ].filter(
+              (item): item is { label: string; value: string } =>
+                Boolean(item.value && item.value.trim().length > 0)
+            );
 
-            <div>
-              <dt className="text-[0.65rem] font-semibold tracking-[0.22em] text-neutral/45 uppercase">
-                Créditos — Dirección de Arte / Estilismo
-              </dt>
-              <dd className="mt-1 font-body text-sm font-normal text-neutral/90">
-                {project.credits.artDirectionAndStyling}
-              </dd>
-            </div>
-          </dl>
+            if (creditEntries.length === 0) return null;
+
+            return (
+              <dl className="mt-5 grid grid-cols-1 gap-3.5 border-y border-neutral/10 py-4 text-sm sm:grid-cols-2 lg:mt-7 lg:grid-cols-1 lg:gap-4 lg:py-5">
+                {creditEntries.map((credit) => (
+                  <div key={credit.label}>
+                    <dt className="text-[0.65rem] font-semibold tracking-[0.22em] text-neutral/45 uppercase">
+                      Créditos — {credit.label}
+                    </dt>
+                    <dd className="mt-0.5 font-body text-sm font-normal text-neutral/90">
+                      {credit.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            );
+          })()}
         </div>
       </aside>
     </div>
