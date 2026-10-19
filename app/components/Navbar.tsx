@@ -6,9 +6,10 @@ import Image from "next/image";
 import { trackEvent } from "@/app/lib/gtag";
 
 const NAV_LINKS = [
-  { label: "Inicio", href: "#hero" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Inicio", href: "/#hero" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Portafolio", href: "/#portafolio" },
+  { label: "Contacto", href: "/#contacto" },
 ];
 
 export default function Navbar() {

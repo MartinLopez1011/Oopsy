@@ -73,9 +73,10 @@ export default function Footer() {
               Navegación
             </h4>
             <div className="flex flex-col items-center gap-2.5 md:items-start">
-              <Link href="#hero" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Inicio</Link>
-              <Link href="#servicios" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Servicios</Link>
-              <Link href="#contacto" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Contacto</Link>
+              <Link href="/#hero" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Inicio</Link>
+              <Link href="/#servicios" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Servicios</Link>
+              <Link href="/#portafolio" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Portafolio</Link>
+              <Link href="/#contacto" className="text-sm text-neutral/45 transition-brand hover:text-primary font-body">Contacto</Link>
             </div>
           </div>
 
