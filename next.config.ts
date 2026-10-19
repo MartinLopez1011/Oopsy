@@ -33,11 +33,6 @@ const nextConfig: NextConfig = {
         destination: "/en-construccion",
         permanent: false,
       },
-      {
-        source: "/portafolio",
-        destination: "/en-construccion",
-        permanent: false,
-      },
     ];
   },
 };
