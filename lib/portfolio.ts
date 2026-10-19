@@ -1033,15 +1033,31 @@ async function fetchRowsFromGoogleSheets(): Promise<RawPortfolioSheetRow[] | nul
 
           if (needsSmartChipResolution) {
             const chipFolderUrls = await fetchSheetSmartChipFolderUrls(sheetId);
+
+            // Excluir los Folder IDs que ya están escritos explícitamente como URL en alguna fila
+            const explicitFolderIds = new Set(
+              parsed
+                .map((r) => extractDriveFolderId(r["Carpeta Drive"] || ""))
+                .filter((id): id is string => Boolean(id))
+            );
+
+            const availableChipUrls = chipFolderUrls.filter((url) => {
+              const id = extractDriveFolderId(url);
+              return id && !explicitFolderIds.has(id);
+            });
+
             let chipIdx = 0;
             for (const row of parsed) {
               if (
                 row["Carpeta Drive"] &&
-                !extractDriveFolderId(row["Carpeta Drive"]) &&
-                chipFolderUrls[chipIdx]
+                !extractDriveFolderId(row["Carpeta Drive"])
               ) {
-                row["Carpeta Drive"] = chipFolderUrls[chipIdx];
-                chipIdx++;
+                const resolvedUrl =
+                  availableChipUrls[chipIdx] || chipFolderUrls[chipIdx];
+                if (resolvedUrl) {
+                  row["Carpeta Drive"] = resolvedUrl;
+                  chipIdx++;
+                }
               }
             }
           }
