@@ -87,7 +87,7 @@ export default function PortfolioSection({
     <section
       id="portafolio"
       aria-label="Portafolio Editorial Oopsy"
-      className="relative overflow-hidden bg-surface px-5 py-24 md:px-8 md:py-32 lg:px-12 lg:py-40"
+      className="relative overflow-hidden bg-surface px-4 py-14 sm:px-6 sm:py-20 md:px-8 md:py-28 lg:px-12 lg:py-36"
     >
       {/* Sutil textura de marca (patronaje de líneas editoriales) */}
       <div
@@ -104,23 +104,23 @@ export default function PortfolioSection({
         {/* Cabecera Editorial (Amplio espacio negativo + Tipografía Melodrama) */}
         <div
           ref={headerRef}
-          className={`reveal border-b border-border pb-10 md:pb-14 ${
+          className={`reveal border-b border-border pb-8 sm:pb-10 md:pb-14 ${
             isHeaderVisible ? "visible" : ""
           }`}
         >
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="flex flex-col justify-between gap-4 sm:gap-6 lg:flex-row lg:items-end">
             <div>
-              <div className="inline-flex items-center gap-2.5 text-[0.7rem] font-semibold tracking-[0.24em] text-text-muted uppercase font-body">
+              <div className="inline-flex items-center gap-2 text-[0.68rem] font-semibold tracking-[0.22em] text-text-muted uppercase font-body sm:gap-2.5 sm:text-[0.7rem]">
                 <span className="h-1.5 w-1.5 rounded-full bg-dark" />
                 <span>LOOKBOOK & ARCHIVE</span>
                 <span className="text-border">/</span>
-                <span>SSG EDITION</span>
+                <span>PRODUCCIÓN VISUAL</span>
               </div>
 
-              <h2 className="mt-4 font-heading text-4xl font-normal leading-[1.04] tracking-tight text-text-heading sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+              <h1 className="mt-3 font-heading text-[2.35rem] font-normal leading-[1.05] tracking-tight text-text-heading sm:mt-4 sm:text-5xl md:text-6xl lg:text-[4.25rem]">
                 {heading}{" "}
                 <span className="italic font-light text-dark/75">Oopsy</span>
-              </h2>
+              </h1>
             </div>
 
             <p className="max-w-md text-sm font-light leading-relaxed text-text-muted font-body md:text-base">
@@ -128,11 +128,11 @@ export default function PortfolioSection({
             </p>
           </div>
 
-          {/* Sistema de Filtrado: Tabs minimalistas sin recargar la página */}
+          {/* Sistema de Filtrado: Carrusel táctil horizontal en mobile, fila flexible en tablet/desktop */}
           <div
             role="tablist"
             aria-label="Filtrar proyectos por categoría"
-            className="mt-10 flex flex-wrap items-center gap-2 sm:gap-3 md:mt-12"
+            className="-mx-4 mt-7 flex snap-x snap-mandatory items-center gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:mt-10 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 md:mt-12"
           >
             {PORTFOLIO_FILTER_TABS.map((category) => {
               const isActive = activeCategory === category;
@@ -145,10 +145,10 @@ export default function PortfolioSection({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => handleCategoryChange(category)}
-                  className={`group relative inline-flex items-center gap-2 border px-4 py-2 text-xs tracking-[0.18em] uppercase transition-all duration-300 font-body sm:px-5 sm:py-2.5 ${
+                  className={`group relative inline-flex shrink-0 snap-start items-center gap-2 border px-4 py-2.5 text-[0.72rem] tracking-[0.16em] uppercase transition-all duration-300 font-body sm:px-5 sm:py-2.5 sm:text-xs sm:tracking-[0.18em] ${
                     isActive
                       ? "border-dark bg-dark text-neutral shadow-sm"
-                      : "border-border bg-surface/80 text-text-body hover:border-dark/40 hover:text-dark"
+                      : "border-border bg-surface/90 text-text-body active:scale-[0.98] hover:border-dark/40 hover:text-dark"
                   }`}
                 >
                   <span>{category}</span>
@@ -169,7 +169,7 @@ export default function PortfolioSection({
 
         {/* Grilla Asimétrica Responsiva (1 col mobile, 2 tablet, 3 desktop) */}
         {filteredProjects.length > 0 ? (
-          <div className="mt-12 grid grid-cols-1 gap-y-14 sm:mt-16 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-20">
+          <div className="mt-10 grid grid-cols-1 gap-y-12 sm:mt-14 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-20">
             {filteredProjects.map((project, index) => (
               <PortfolioCard
                 key={project.id}

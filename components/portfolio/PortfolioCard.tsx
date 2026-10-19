@@ -74,9 +74,35 @@ export default function PortfolioCard({
           className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
         />
 
-        {/* Overlay sutil revelado en hover (microinteracción duration-500) */}
+        {/* Badge táctil visible en mobile/tablet (donde no existe hover) */}
         <div
-          className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-dark-deep/85 via-dark-deep/25 to-transparent p-6 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 md:p-7"
+          className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-dark-deep/75 via-dark-deep/25 to-transparent px-4 pt-10 pb-3.5 text-neutral md:hidden"
+          aria-hidden="true"
+        >
+          <span className="inline-flex items-center gap-1.5 border border-neutral/25 bg-dark-deep/60 px-2.5 py-1 text-[0.62rem] font-medium tracking-[0.2em] uppercase backdrop-blur-md">
+            <span>{project.gallery.length} FOTOS</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-medium tracking-[0.18em] text-primary uppercase">
+            <span>Ver sesión</span>
+            <svg
+              className="h-3.5 w-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </span>
+        </div>
+
+        {/* Overlay sutil revelado en hover para desktop (microinteracción duration-500) */}
+        <div
+          className="pointer-events-none absolute inset-0 hidden flex-col justify-between bg-gradient-to-t from-dark-deep/85 via-dark-deep/25 to-transparent p-6 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 md:flex md:p-7"
           aria-hidden="true"
         >
           {/* Top badge inside overlay */}
@@ -119,8 +145,8 @@ export default function PortfolioCard({
 
       {/* Subtítulo editorial permanente debajo de la fotografía (estilo Saint Laurent / Obys) */}
       <div className="mt-3.5 flex items-baseline justify-between gap-4 border-b border-border-light pb-3.5">
-        <div>
-          <h3 className="font-heading text-lg font-medium tracking-tight text-text-heading transition-colors duration-300 group-hover:text-dark md:text-xl">
+        <div className="min-w-0">
+          <h2 className="truncate font-heading text-lg font-medium tracking-tight text-text-heading transition-colors duration-300 group-hover:text-dark md:text-xl">
             <button
               type="button"
               onClick={() => onSelect(project)}
@@ -128,8 +154,8 @@ export default function PortfolioCard({
             >
               {project.title}
             </button>
-          </h3>
-          <p className="mt-0.5 text-xs tracking-[0.14em] text-text-muted uppercase font-body">
+          </h2>
+          <p className="mt-0.5 truncate text-xs tracking-[0.14em] text-text-muted uppercase font-body">
             {project.client}
           </p>
         </div>

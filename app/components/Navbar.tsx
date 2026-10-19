@@ -3,21 +3,27 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { trackEvent } from "@/app/lib/gtag";
 
 const NAV_LINKS = [
   { label: "Inicio", href: "/#hero" },
   { label: "Servicios", href: "/#servicios" },
-  { label: "Portafolio", href: "/#portafolio" },
+  { label: "Portafolio", href: "/portafolio" },
   { label: "Contacto", href: "/#contacto" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // En páginas internas con fondo claro (ej. /portafolio), forzamos el estilo de contraste oscuro desde el tope
+  const hasLightHeaderBg = isScrolled || pathname?.startsWith("/portafolio");
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -31,16 +37,16 @@ export default function Navbar() {
     <header
       id="navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+        hasLightHeaderBg
           ? "glass border-b border-border-light/50 shadow-sm py-0"
           : "bg-transparent py-1"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-8 lg:px-12">
-        {/* Logo — switches from green (on dark hero) to logotipo (on scrolled white bg) */}
+        {/* Logo — switches from green (on dark hero) to logotipo (on scrolled/light bg) */}
         <Link href="/" className="relative z-50 flex items-center group">
           <Image
-            src={isScrolled ? "/images/logo.png" : "/images/logo-green.png"}
+            src={hasLightHeaderBg ? "/images/logo.png" : "/images/logo-green.png"}
             alt="Oopsy"
             width={160}
             height={48}
@@ -56,14 +62,14 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className={`relative px-4 py-2 text-sm font-medium transition-brand group ${
-                  isScrolled
+                  hasLightHeaderBg
                     ? "text-text-body hover:text-dark"
                     : "text-white/80 hover:text-white"
                 }`}
               >
                 {link.label}
                 <span className={`absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full transition-all duration-300 group-hover:w-3/4 ${
-                  isScrolled ? "bg-secondary" : "bg-primary"
+                  hasLightHeaderBg ? "bg-secondary" : "bg-primary"
                 }`} />
               </Link>
             </li>
@@ -72,10 +78,10 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <Link
-          href="#contacto"
+          href="/#contacto"
           onClick={() => trackEvent("click_cta", { location: "navbar_desktop", text: "Contáctanos" })}
           className={`hidden items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold shadow-md transition-brand hover:shadow-lg hover:-translate-y-0.5 md:inline-flex btn-shimmer ${
-            isScrolled
+            hasLightHeaderBg
               ? "bg-dark text-neutral hover:bg-dark-deep"
               : "bg-primary text-dark hover:bg-primary-dark"
           }`}
@@ -90,8 +96,8 @@ export default function Navbar() {
           className={`relative z-50 flex h-10 w-10 items-center justify-center rounded-full md:hidden transition-colors duration-300 ${
             isMobileMenuOpen
               ? "bg-neutral/80"
-              : isScrolled
-                ? "bg-neutral/80"
+              : hasLightHeaderBg
+                ? "bg-neutral-dark/80 border border-border"
                 : "bg-white/10 backdrop-blur-sm"
           }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -102,17 +108,17 @@ export default function Navbar() {
             <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${
               isMobileMenuOpen
                 ? "translate-y-[7px] rotate-45 bg-dark"
-                : isScrolled ? "bg-dark" : "bg-white"
+                : hasLightHeaderBg ? "bg-dark" : "bg-white"
             }`} />
             <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${
               isMobileMenuOpen
                 ? "scale-x-0 opacity-0"
-                : isScrolled ? "bg-dark" : "bg-white"
+                : hasLightHeaderBg ? "bg-dark" : "bg-white"
             }`} />
             <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${
               isMobileMenuOpen
                 ? "-translate-y-[7px] -rotate-45 bg-dark"
-                : isScrolled ? "bg-dark" : "bg-white"
+                : hasLightHeaderBg ? "bg-dark" : "bg-white"
             }`} />
           </div>
         </button>
@@ -171,7 +177,7 @@ export default function Navbar() {
           />
 
           <Link
-            href="#contacto"
+            href="/#contacto"
             onClick={() => {
               setIsMobileMenuOpen(false);
               trackEvent("click_cta", { location: "navbar_mobile", text: "Contáctanos" });
