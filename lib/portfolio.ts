@@ -96,7 +96,7 @@ function isRawGoogleDriveUrl(url: string): boolean {
  * convirtiendo fotos pesadas de 10MB en WebP/AVIF ligeras (~45KB - 250KB) servidas desde el CDN de Cloudinary.
  */
 export function buildDriveToCloudinaryFetchUrl(driveFileId: string): string {
-  const googleSourceUrl = `https://lh3.googleusercontent.com/d/${driveFileId}`;
+  const googleSourceUrl = `https://lh3.googleusercontent.com/d/${driveFileId}=w1600`;
   const cloudinaryCloudName =
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim() || "kyzll4ja";
 
@@ -105,7 +105,7 @@ export function buildDriveToCloudinaryFetchUrl(driveFileId: string): string {
     cloudinaryCloudName !== "your-cloud-name" &&
     cloudinaryCloudName !== "undefined"
   ) {
-    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/fetch/f_auto,q_auto,w_1600/${googleSourceUrl}`;
+    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/fetch/c_limit,w_1400,f_auto,q_auto:good/${googleSourceUrl}`;
   }
 
   return googleSourceUrl;

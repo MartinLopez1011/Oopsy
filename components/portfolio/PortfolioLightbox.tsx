@@ -119,20 +119,31 @@ export default function PortfolioLightbox({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Contenedor de imagen activa con lazy loading */}
+        {/* Contenedor de imagen activa con precarga de galería para cambio instantáneo */}
         <div className="relative flex h-full max-h-[68vh] w-full max-w-5xl items-center justify-center lg:max-h-[82vh]">
-          <Image
-            key={currentImage.id}
-            src={currentImage.src}
-            alt={currentImage.alt}
-            width={currentImage.width}
-            height={currentImage.height}
-            sizes="(max-width: 1024px) 95vw, 68vw"
-            loading="lazy"
-            placeholder="blur"
-            blurDataURL={currentImage.blurDataURL || project.blurDataURL}
-            className="max-h-[68vh] w-auto max-w-full object-contain transition-opacity duration-500 lg:max-h-[80vh]"
-          />
+          {project.gallery.map((img, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <Image
+                key={img.id}
+                src={img.src}
+                alt={img.alt}
+                width={img.width}
+                height={img.height}
+                sizes="(max-width: 1024px) 95vw, 68vw"
+                priority={isActive || idx === 0}
+                loading="eager"
+                unoptimized={img.src.includes("res.cloudinary.com")}
+                placeholder="blur"
+                blurDataURL={img.blurDataURL || project.blurDataURL}
+                className={`max-h-[68vh] w-auto max-w-full object-contain transition-opacity duration-200 lg:max-h-[80vh] ${
+                  isActive
+                    ? "relative z-10 opacity-100"
+                    : "pointer-events-none absolute inset-0 m-auto opacity-0"
+                }`}
+              />
+            );
+          })}
         </div>
 
         {/* Caption & Controles de Navegación Superpuestos */}
@@ -284,7 +295,8 @@ export default function PortfolioLightbox({
                     alt={img.alt}
                     fill
                     sizes="96px"
-                    loading="lazy"
+                    loading="eager"
+                    unoptimized={img.src.includes("res.cloudinary.com")}
                     className="object-cover"
                   />
                 </button>

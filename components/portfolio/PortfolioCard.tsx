@@ -66,6 +66,8 @@ export default function PortfolioCard({
           src={project.coverImage}
           alt={`${project.title} — ${project.client} (${project.category})`}
           fill
+          priority={index < 3}
+          unoptimized={project.coverImage.includes("res.cloudinary.com")}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           placeholder="blur"
           blurDataURL={project.blurDataURL}
