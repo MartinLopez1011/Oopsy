@@ -98,7 +98,7 @@ function isRawGoogleDriveUrl(url: string): boolean {
 export function buildDriveToCloudinaryFetchUrl(driveFileId: string): string {
   const googleSourceUrl = `https://lh3.googleusercontent.com/d/${driveFileId}`;
   const cloudinaryCloudName =
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim();
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim() || "kyzll4ja";
 
   if (
     cloudinaryCloudName &&
@@ -162,7 +162,7 @@ export function resolveOptimizedAssetUrl(
     ""
   );
   const cloudinaryCloudName =
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim();
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim() || "kyzll4ja";
 
   // 4. Si se especificó explícitamente un identificador de Cloudinary (ej: "cloudinary:mi-foto" o "cld:oopsy/...")
   const isExplicitCloudinary =

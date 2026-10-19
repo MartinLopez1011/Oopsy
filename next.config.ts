@@ -22,6 +22,24 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // Si NEXT_PUBLIC_MAINTENANCE_MODE === "false", desactiva la redirección
+    if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "false") {
+      return [];
+    }
+    return [
+      {
+        source: "/",
+        destination: "/en-construccion",
+        permanent: false,
+      },
+      {
+        source: "/portafolio",
+        destination: "/en-construccion",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
