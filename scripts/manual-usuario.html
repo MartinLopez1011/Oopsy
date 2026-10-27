@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Manual de Usuario — Portafolio Oopsy</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #302e2c;
+      background: #ffffff;
+      line-height: 1.32;
+      font-size: 11px;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      border-bottom: 2px solid #302e2c;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #302e2c;
+    }
+    .brand span {
+      color: #9ac46c;
+    }
+    .doc-meta {
+      font-size: 10px;
+      color: #8a8580;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: right;
+    }
+    h1 {
+      font-size: 16.5px;
+      margin: 0 0 4px 0;
+      color: #302e2c;
+    }
+    p.lead {
+      font-size: 11px;
+      color: #4a4745;
+      margin: 0 0 9px 0;
+      line-height: 1.35;
+    }
+    .step-box {
+      background: #faf8f5;
+      border: 1px solid #e8e5e0;
+      border-left: 4px solid #302e2c;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+    }
+    .step-box.step-1 { border-left-color: #f2a0c5; }
+    .step-box.step-2 { border-left-color: #52b8c6; }
+    .step-box.step-3 { border-left-color: #b7e27f; }
+
+    .step-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      margin: 0 0 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .step-number {
+      background: #302e2c;
+      color: #fff;
+      font-size: 10px;
+      padding: 1.5px 6.5px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+    ol, ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+    li {
+      margin-bottom: 2px;
+    }
+    .alert {
+      background: #fff6e6;
+      border: 1px dashed #d884a6;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #3a3835;
+      margin-top: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+      font-size: 9.8px;
+    }
+    th, td {
+      border: 1px solid #e8e5e0;
+      padding: 3px 7px;
+      text-align: left;
+    }
+    th {
+      background: #302e2c;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 9px;
+    }
+    tr:nth-child(even) {
+      background: #ffffff;
+    }
+    tr:nth-child(odd) {
+      background: #faf8f5;
+    }
+    .tag {
+      display: inline-block;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 600;
+    }
+    .tag-pub { background: #d4eeb3; color: #3a3835; }
+    .tag-draft { background: #f0ede8; color: #8a8580; }
+    footer {
+      margin-top: 8px;
+      border-top: 1px solid #e8e5e0;
+      padding-top: 6px;
+      font-size: 9.5px;
+      color: #8a8580;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">OOPSY<span>!</span></div>
+    <div class="doc-meta">
+      Manual Operativo de Equipo<br>
+      Gestión de Portafolio Editorial
+    </div>
+  </header>
+
+  <h1>Guía de Publicación de Proyectos en el Portafolio</h1>
+  <p class="lead">
+    El flujo de publicación está 100% automatizado. Todo se gestiona desde <strong>Google Drive</strong> y la planilla de <strong>Google Sheets</strong>, sin requerir conocimientos técnicos ni compresión manual de fotos.
+  </p>
+
+  <!-- Paso 1 -->
+  <div class="step-box step-1">
+    <div class="step-title">
+      <span class="step-number">1</span>
+      Subir las fotos a Google Drive
+    </div>
+    <ol>
+      <li>Crea una carpeta en Google Drive para el proyecto (ejemplo: <code>2026-10_Editorial_Vogue</code>).</li>
+      <li>Sube todas las fotos seleccionadas en su calidad original (JPG, PNG o WebP).</li>
+      <li><strong>Configura el permiso de acceso público</strong> (Indispensable para que la web las lea):
+        <ul>
+          <li>Clic derecho en la carpeta &rarr; <strong>Compartir</strong> &rarr; <strong>Compartir</strong>.</li>
+          <li>En <em>Acceso general</em>, selecciona <strong>"Cualquier persona con el enlace"</strong> en rol <strong>Lector</strong>.</li>
+        </ul>
+      </li>
+      <li>Haz clic en <strong>Copiar enlace</strong> de la carpeta.</li>
+    </ol>
+  </div>
+
+  <!-- Paso 2 -->
+  <div class="step-box step-2">
+    <div class="step-title">
+      <span class="step-number">2</span>
+      Registrar el proyecto en Google Sheets
+    </div>
+    <p style="margin: 0 0 8px 0; font-size: 12px;">Abre la planilla oficial de Oopsy y completa las columnas de una nueva fila:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Columna</th>
+          <th>Qué ingresar</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ID Proyecto</strong></td>
+          <td>Código identificador correlativo</td>
+          <td><code>OOP-002</code></td>
+        </tr>
+        <tr>
+          <td><strong>Título del Proyecto</strong></td>
+          <td>Nombre editorial del proyecto</td>
+          <td><code>SILENCIO MINERAL AW26</code></td>
+        </tr>
+        <tr>
+          <td><strong>Cliente / Marca</strong></td>
+          <td>Marca, diseñador o revista</td>
+          <td><code>Atelier Kósmos</code></td>
+        </tr>
+        <tr>
+          <td><strong>Categoría</strong></td>
+          <td>Una de las 3 opciones oficiales</td>
+          <td><code>Sesiones Fotográficas</code><br><em>(O: Eventos de Moda / Cobertura Editorial)</em></td>
+        </tr>
+        <tr>
+          <td><strong>Mes / Año</strong></td>
+          <td>Fecha en formato MM/AAAA</td>
+          <td><code>10/2026</code></td>
+        </tr>
+        <tr>
+          <td><strong>Carpeta Drive</strong></td>
+          <td>Pega el enlace copiado en el Paso 1</td>
+          <td><em>(Enlace o chip de Drive)</em></td>
+        </tr>
+        <tr>
+          <td><strong>Imagen de Portada</strong></td>
+          <td>Enlace de Drive o nombre del archivo de carátula <em>(si queda vacío, toma la 1ª foto)</em></td>
+          <td><code>portada.jpg</code> o link de Drive</td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Fotografía</strong></td>
+          <td>Fotógrafo(s) o estudio <em>(opcional)</em></td>
+          <td><code>Valentina Moraga</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Dirección de Arte / Estilismo</strong></td>
+          <td>Dirección de arte o styling <em>(opcional)</em></td>
+          <td><code>Camila Ríos</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Modelo</strong></td>
+          <td>Modelo(s) o talentos de la sesión <em>(opcional)</em></td>
+          <td><code>Sofía Larraín</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Diseñadores</strong></td>
+          <td>Diseñador(es) o vestuario <em>(opcional)</em></td>
+          <td><code>Atelier Kósmos</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Maquilladoras</strong></td>
+          <td>Make-up &amp; Hair <em>(opcional)</em></td>
+          <td><code>Fernanda Paz</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Dirección Creativa</strong></td>
+          <td>Dirección creativa general <em>(opcional)</em></td>
+          <td><code>Oopsy Creative Studio</code></td>
+        </tr>
+        <tr>
+          <td><strong>Créditos - Organizadores Asociados</strong></td>
+          <td>Productoras, sponsors o colaboradores <em>(opcional)</em></td>
+          <td><code>Pasarela Chile</code></td>
+        </tr>
+        <tr>
+          <td><strong>Estado</strong></td>
+          <td><span class="tag tag-pub">Publicado</span> o <span class="tag tag-draft">Borrador</span></td>
+          <td><code>Publicado</code></td>
+        </tr>
+        <tr>
+          <td><strong>Destacado en Home</strong></td>
+          <td>¿Debe salir en la portada principal?</td>
+          <td><code>Sí</code> o <code>No</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="alert" style="margin-top: 10px;">
+      ✨ <strong>Campos Opcionales Inteligentes:</strong> Cualquier columna de créditos (o fecha/cliente) que dejes <strong>vacía</strong> en el Excel <strong>NO se mostrará</strong> en la página web. Solo aparecen en la ficha técnica los créditos que tengan información escrita.
+    </div>
+  </div>
+
+  <!-- Paso 3 -->
+  <div class="step-box step-3">
+    <div class="step-title">
+      <span class="step-number">3</span>
+      Procesamiento Automático y Publicación
+    </div>
+    <ul>
+      <li><strong>Detección automática:</strong> El sistema lee la carpeta de Drive y recopila todas las fotos de la sesión.</li>
+      <li><strong>Optimización CDN:</strong> Convierte las fotos pesadas de 10 MB a WebP/AVIF ultralivianas (~45-200 KB) sin pérdida visible.</li>
+      <li><strong>Publicación en Vercel:</strong> El sitio web se actualiza mostrando la portada en la grilla y el visor interactivo (Lightbox) a pantalla completa con todas las fotos y los créditos.</li>
+    </ul>
+    <div class="alert">
+      💡 <strong>Control de Borradores:</strong> Si aún estás editando o subiendo fotos a Drive, deja la columna <strong>Estado</strong> en <strong>Borrador</strong>. La web solo publicará los proyectos marcados como <strong>Publicado</strong>.
+    </div>
+  </div>
+
+  <footer>
+    <span>OOPSY — Agencia de Moda y Producción Editorial</span>
+    <span>Documento de Consulta Interna &bull; Versión 1.1</span>
+  </footer>
+
+</body>
+</html>
