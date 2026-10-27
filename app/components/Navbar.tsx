@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: "Inicio", href: "/#hero" },
   { label: "Servicios", href: "/#servicios" },
   { label: "Portafolio", href: "/portafolio" },
+  { label: "Talentos", href: "/talentos" },
   { label: "Contacto", href: "/#contacto" },
 ];
 
@@ -18,8 +19,12 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // En páginas internas con fondo claro (ej. /portafolio), forzamos el estilo de contraste oscuro desde el tope
-  const hasLightHeaderBg = isScrolled || pathname?.startsWith("/portafolio");
+  // En páginas internas con fondo claro o barra fija superior (/portafolio, /talentos, /casting), forzamos contraste
+  const hasLightHeaderBg =
+    isScrolled ||
+    pathname?.startsWith("/portafolio") ||
+    pathname?.startsWith("/talentos") ||
+    pathname?.startsWith("/casting");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
@@ -30,7 +35,9 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMobileMenuOpen]);
 
   return (

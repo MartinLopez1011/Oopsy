@@ -105,7 +105,7 @@ export function buildDriveToCloudinaryFetchUrl(driveFileId: string): string {
     cloudinaryCloudName !== "your-cloud-name" &&
     cloudinaryCloudName !== "undefined"
   ) {
-    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/fetch/c_limit,w_1400,f_auto,q_auto:good/${googleSourceUrl}`;
+    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/fetch/c_limit,w_1200,q_auto,f_auto,fl_strip_profile/${googleSourceUrl}`;
   }
 
   return googleSourceUrl;
@@ -181,7 +181,7 @@ export function resolveOptimizedAssetUrl(
       .replace(/^\/+/, "")
       .replace(/\.[a-zA-Z0-9]+$/, "");
 
-    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/f_auto,q_auto,w_1600/${cleanPublicId}`;
+    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/w_1200,q_auto,f_auto,fl_strip_profile/${cleanPublicId}`;
   }
 
   // 5. Resolución vía CDN dedicado (Cloudflare R2 / S3 / Vercel Blob)

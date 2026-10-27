@@ -22,6 +22,24 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        // Regla obligatoria Ley N° 21.719: impedir indexación y caché público de paquetes de casting privados
+        source: "/casting/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+          {
+            key: "Cache-Control",
+            value: "private, no-store, no-cache, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     // Si NEXT_PUBLIC_MAINTENANCE_MODE === "false", desactiva la redirección
     if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "false") {

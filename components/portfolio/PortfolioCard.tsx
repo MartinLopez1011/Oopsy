@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import type { PortfolioProject, EditorialAspectRatio } from "@/types/portfolio";
+import ImageShield from "@/components/ui/ImageShield";
 
 interface PortfolioCardProps {
   project: PortfolioProject;
@@ -55,28 +55,28 @@ export default function PortfolioCard({
         <span className="truncate pl-3 text-dark/60">{project.category}</span>
       </div>
 
-      {/* Interactive Image Frame */}
+      {/* Interactive Image Frame protegido con ImageShield */}
       <button
         type="button"
         onClick={() => onSelect(project)}
+        onContextMenu={(e) => e.preventDefault()}
         aria-label={`Abrir galería editorial de ${project.title} — ${project.client}`}
-        className={`relative w-full overflow-hidden bg-neutral-dark text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-dark focus-visible:ring-offset-4 ${aspectClass}`}
+        className={`relative w-full overflow-hidden bg-neutral-dark text-left select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-dark focus-visible:ring-offset-4 ${aspectClass}`}
       >
-        <Image
+        <ImageShield
           src={project.coverImage}
           alt={`${project.title} — ${project.client} (${project.category})`}
           fill
-          priority={index < 3}
-          unoptimized={project.coverImage.includes("res.cloudinary.com")}
+          priority={index === 0}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          placeholder="blur"
           blurDataURL={project.blurDataURL}
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+          containerClassName="h-full w-full"
+          imageClassName="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
         />
 
         {/* Badge táctil visible en mobile/tablet (donde no existe hover) */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-dark-deep/75 via-dark-deep/25 to-transparent px-4 pt-10 pb-3.5 text-neutral md:hidden"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-between bg-gradient-to-t from-dark-deep/75 via-dark-deep/25 to-transparent px-4 pt-10 pb-3.5 text-neutral md:hidden"
           aria-hidden="true"
         >
           <span className="inline-flex items-center gap-1.5 border border-neutral/25 bg-dark-deep/60 px-2.5 py-1 text-[0.62rem] font-medium tracking-[0.2em] uppercase backdrop-blur-md">
@@ -102,7 +102,7 @@ export default function PortfolioCard({
 
         {/* Overlay sutil revelado en hover para desktop (microinteracción duration-500) */}
         <div
-          className="pointer-events-none absolute inset-0 hidden flex-col justify-between bg-gradient-to-t from-dark-deep/85 via-dark-deep/25 to-transparent p-6 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 md:flex md:p-7"
+          className="pointer-events-none absolute inset-0 z-20 hidden flex-col justify-between bg-gradient-to-t from-dark-deep/85 via-dark-deep/25 to-transparent p-6 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 md:flex md:p-7"
           aria-hidden="true"
         >
           {/* Top badge inside overlay */}
